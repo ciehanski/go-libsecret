@@ -18,6 +18,14 @@ func (collection Collection) Path() dbus.ObjectPath {
 	return collection.dbus.Path()
 }
 
+func (collection *Collection) Label() (string, error) {
+	val, err := collection.dbus.GetProperty("org.freedesktop.Secret.Collection.Label")
+	if err != nil {
+		return "", err
+	}
+	return val.Value().(string), nil
+}
+
 // READ Array<ObjectPath> Items;
 func (collection *Collection) Items() ([]Item, error) {
 	val, err := collection.dbus.GetProperty("org.freedesktop.Secret.Collection.Items")
